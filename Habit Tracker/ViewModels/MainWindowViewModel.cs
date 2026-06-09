@@ -42,5 +42,12 @@ namespace Habit_Tracker.ViewModels
             NewHabitName = string.Empty;
             NewHabitDescription = string.Empty;
         }
+
+        [RelayCommand]
+        private void DeleteHabit(Guid id)
+        {
+            _habitService.DeleteHabit(id);
+            Habits = new ObservableCollection<Habit>(_habitService.GetHabits());
+        }
     }
 }
