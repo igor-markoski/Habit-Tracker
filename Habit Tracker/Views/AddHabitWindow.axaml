@@ -1,0 +1,45 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Habit_Tracker.Views.AddHabitWindow"
+        Title="Add New Habit"
+        Width="400" Height="250"
+        CanResize="False"
+        WindowStartupLocation="CenterOwner"
+        ExtendClientAreaToDecorationsHint="True">
+    
+    <Border Padding="20" Background="{DynamicResource SystemRegionBrush}">
+        <Grid RowDefinitions="Auto, *, Auto">
+            
+            <TextBlock Grid.Row="0" 
+                       Text="Create a New Habit" 
+                       FontSize="22" 
+                       FontWeight="Bold" 
+                       Margin="0,0,0,20"/>
+
+            <StackPanel Grid.Row="1" Spacing="15">
+                <TextBox x:Name="NameTextBox" 
+                         PlaceholderText="Habit Name (e.g., Drink Water)" 
+                         FontSize="14"/>
+                <TextBox x:Name="DescTextBox" 
+                         PlaceholderText="Description (Optional)" 
+                         FontSize="14"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" 
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Right" 
+                        Spacing="10"
+                        Margin="0,20,0,0">
+                <Button Content="Cancel" 
+                        Click="CancelButton_Click" 
+                        Padding="15,8"/>
+                <Button Content="Save Habit" 
+                        Click="SaveButton_Click" 
+                        Background="#2196F3" 
+                        Foreground="White"
+                        FontWeight="Bold"
+                        Padding="15,8"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

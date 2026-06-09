@@ -1,10 +1,10 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Habit_Tracker.Models;
 using Habit_Tracker.Services;
-
 using CommunityToolkit.Mvvm.Input;
 
 namespace Habit_Tracker.ViewModels
@@ -12,20 +12,16 @@ namespace Habit_Tracker.ViewModels
     public partial class MainWindowViewModel : ViewModelBase
     {
         private readonly HabitService _habitService;
+        private readonly IDialogService _dialogService;
         
         [ObservableProperty]
         private ObservableCollection<Habit> _habits;
-
-        [ObservableProperty]
-        private string _newHabitName = string.Empty;
-
-        [ObservableProperty]
-        private string _newHabitDescription = string.Empty;
 
         public MainWindowViewModel()
         {
             var storage = new StorageService();
             _habitService = new HabitService(storage);
+            _dialogService = new DialogService(); // Injected for simplicity
             _habits = new ObservableCollection<Habit>(_habitService.GetHabits());
         }
 
@@ -43,18 +39,14 @@ namespace Habit_Tracker.ViewModels
         }
 
         [RelayCommand]
-        private void AddHabit()
+        private async Task AddHabitAsync()
         {
-            if (string.IsNullOrWhiteSpace(NewHabitName)) return;
-
-            _habitService.AddHabit(NewHabitName, NewHabitDescription);
-            
-            // Refresh list
-            Habits = new ObservableCollection<Habit>(_habitService.GetHabits());
-            
-            // Clear inputs
-            NewHabitName = string.Empty;
-            NewHabitDescription = string.Empty;
+            var result = await _dialogService.ShowAddHabitDialogAsync();
+            if (result.Success && !string.IsNullOrWhiteSpace(result.Name))
+            {
+                _habitService.AddHabit(result.Name, result.Description);
+                Habits = new ObservableCollection<Habit>(_habitService.GetHabits());
+            }
         }
 
         [RelayCommand]
