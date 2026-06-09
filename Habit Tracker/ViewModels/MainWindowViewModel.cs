@@ -4,6 +4,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Habit_Tracker.Models;
 using Habit_Tracker.Services;
 
+using CommunityToolkit.Mvvm.Input;
+
 namespace Habit_Tracker.ViewModels
 {
     public partial class MainWindowViewModel : ViewModelBase
@@ -13,12 +15,32 @@ namespace Habit_Tracker.ViewModels
         [ObservableProperty]
         private ObservableCollection<Habit> _habits;
 
+        [ObservableProperty]
+        private string _newHabitName = string.Empty;
+
+        [ObservableProperty]
+        private string _newHabitDescription = string.Empty;
+
         public MainWindowViewModel()
         {
-            // For design time or if services are not injected
             var storage = new StorageService();
             _habitService = new HabitService(storage);
             _habits = new ObservableCollection<Habit>(_habitService.GetHabits());
+        }
+
+        [RelayCommand]
+        private void AddHabit()
+        {
+            if (string.IsNullOrWhiteSpace(NewHabitName)) return;
+
+            _habitService.AddHabit(NewHabitName, NewHabitDescription);
+            
+            // Refresh list
+            Habits = new ObservableCollection<Habit>(_habitService.GetHabits());
+            
+            // Clear inputs
+            NewHabitName = string.Empty;
+            NewHabitDescription = string.Empty;
         }
     }
 }
