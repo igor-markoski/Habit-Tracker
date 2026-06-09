@@ -44,6 +44,13 @@ namespace Habit_Tracker.ViewModels
         }
 
         [RelayCommand]
+        private void ToggleDone(Guid id)
+        {
+            _habitService.ToggleHabitCompletion(id, DateTime.Today);
+            Habits = new ObservableCollection<Habit>(_habitService.GetHabits());
+        }
+
+        [RelayCommand]
         private void DeleteHabit(Guid id)
         {
             _habitService.DeleteHabit(id);
