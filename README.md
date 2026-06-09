@@ -28,13 +28,21 @@ The project follows the **Model-ViewModel-View (MVVM)** architectural pattern:
 Data is serialized using `System.Text.Json` and stored in a file named `habits.json`. The application automatically loads this file on startup and saves changes whenever a habit is added, deleted, or updated. The file is located in the `%AppData%/Local/HabitTracker` directory.
 
 ## AI Usage in Development
-This project was developed with the assistance of **Gemini CLI**, an AI-powered coding agent. The AI helped in:
-- Setting up the initial project structure and MVVM scaffolding.
-- Implementing complex logic such as streak calculations using LINQ.
-- Designing the UI layout and XAML bindings.
-- Managing the **Feature Branch Workflow** to simulate professional collaboration.
+This project was developed with the assistance of AI tools to accelerate the development process and ensure best practices:
+- **ChatGPT**: Used for initial brainstorming and generating the precise system prompts and architecture requirements.
+- **Gemini Pro (via Gemini CLI)**: Used as the primary coding assistant for generating the C# code, setting up the Avalonia MVVM structure, implementing logic (like streak calculations), and managing the Git Feature Branch workflow.
 
-## Screenshots Suggestions
-- **Main View**: Show the list of habits with their streaks.
-- **Dark Mode**: Toggle the theme to show the application in dark mode.
-- **Add Habit**: Show the input fields at the bottom for adding a new habit.
+## Media (Screenshots & Videos)
+*(Replace the placeholder links below with your actual images or videos before submitting)*
+
+### Main View
+![Main View Placeholder](link-to-your-main-view-image.png)
+*Description: The main dashboard showing active habits and current streaks.*
+
+### Dark Mode Toggle
+![Dark Mode Placeholder](link-to-your-dark-mode-image.png)
+*Description: The application running in Dark Mode for better nighttime visibility.*
+
+### Adding a Habit
+![Add Habit Placeholder](link-to-your-add-habit-image.png)
+*Description: Demonstrating the process of creating a new habit.*
