@@ -29,6 +29,19 @@ namespace Habit_Tracker.ViewModels
         }
 
         [RelayCommand]
+        private void ToggleTheme()
+        {
+            if (Avalonia.Application.Current != null)
+            {
+                var theme = Avalonia.Application.Current.ActualThemeVariant;
+                Avalonia.Application.Current.RequestedThemeVariant = 
+                    theme == Avalonia.Styling.ThemeVariant.Dark 
+                    ? Avalonia.Styling.ThemeVariant.Light 
+                    : Avalonia.Styling.ThemeVariant.Dark;
+            }
+        }
+
+        [RelayCommand]
         private void AddHabit()
         {
             if (string.IsNullOrWhiteSpace(NewHabitName)) return;
