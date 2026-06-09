@@ -3,16 +3,61 @@
         xmlns:vm="using:Habit_Tracker.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:models="using:Habit_Tracker.Models"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="500"
         x:Class="Habit_Tracker.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Title="Habit Tracker">
+        Title="Habit Tracker"
+        Width="600" Height="500"
+        WindowStartupLocation="CenterScreen">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
-    </StackPanel>
+    <DockPanel Margin="20">
+        <TextBlock DockPanel.Dock="Top" 
+                   Text="My Habits" 
+                   FontSize="28" 
+                   FontWeight="Bold" 
+                   Margin="0,0,0,20"
+                   HorizontalAlignment="Center"/>
+
+        <StackPanel DockPanel.Dock="Bottom" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Center" 
+                    Spacing="10" 
+                    Margin="0,20,0,0">
+            <Button Content="Add New Habit" 
+                    Padding="10,5"
+                    Background="#2196F3"
+                    Foreground="White"/>
+        </StackPanel>
+
+        <ScrollViewer>
+            <ItemsControl ItemsSource="{Binding Habits}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="models:Habit">
+                        <Border BorderBrush="#DDDDDD" 
+                                BorderThickness="1" 
+                                CornerRadius="5" 
+                                Padding="15" 
+                                Margin="0,0,0,10">
+                            <DockPanel>
+                                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="5">
+                                    <Button Content="Done" Background="#4CAF50" Foreground="White"/>
+                                    <Button Content="Delete" Background="#F44336" Foreground="White"/>
+                                </StackPanel>
+                                
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="18"/>
+                                    <TextBlock Text="{Binding Description}" FontSize="12" Foreground="Gray"/>
+                                </StackPanel>
+                            </DockPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </DockPanel>
 </Window>
