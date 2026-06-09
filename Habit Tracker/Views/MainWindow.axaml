@@ -4,12 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:models="using:Habit_Tracker.Models"
+        xmlns:conv="using:Habit_Tracker.Converters"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="500"
         x:Class="Habit_Tracker.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Title="Habit Tracker"
         Width="600" Height="500"
         WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <conv:BoolToDoneConverter x:Key="BoolToDoneConverter"/>
+        <conv:BoolToColorConverter x:Key="BoolToColorConverter"/>
+    </Window.Resources>
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
@@ -49,7 +55,11 @@
                                 Margin="0,0,0,10">
                             <DockPanel>
                                 <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="5">
-                                    <Button Content="Done" Background="#4CAF50" Foreground="White"/>
+                                    <Button Content="{Binding IsCompletedToday, Converter={StaticResource BoolToDoneConverter}}" 
+                                            Background="{Binding IsCompletedToday, Converter={StaticResource BoolToColorConverter}}" 
+                                            Foreground="White"
+                                            Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ToggleDoneCommand}"
+                                            CommandParameter="{Binding Id}"/>
                                     <Button Content="Delete" 
                                             Background="#F44336" 
                                             Foreground="White"
