@@ -22,12 +22,19 @@
     </Design.DataContext>
 
     <DockPanel Margin="20">
-        <TextBlock DockPanel.Dock="Top" 
-                   Text="My Habits" 
-                   FontSize="28" 
-                   FontWeight="Bold" 
-                   Margin="0,0,0,20"
-                   HorizontalAlignment="Center"/>
+        <StackPanel DockPanel.Dock="Top" Margin="0,0,0,20">
+            <TextBlock Text="Habit Tracker" 
+                       FontSize="32" 
+                       FontWeight="ExtraBold" 
+                       Foreground="#2196F3"
+                       HorizontalAlignment="Center"/>
+            <TextBlock Text="Consistency is key!" 
+                       FontSize="14" 
+                       FontStyle="Italic" 
+                       Foreground="Gray"
+                       HorizontalAlignment="Center"/>
+            <Separator Margin="0,15"/>
+        </StackPanel>
 
         <StackPanel DockPanel.Dock="Bottom" 
                     Orientation="Vertical" 
