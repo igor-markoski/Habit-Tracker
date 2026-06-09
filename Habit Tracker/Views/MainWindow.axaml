@@ -50,7 +50,11 @@
                             <DockPanel>
                                 <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="5">
                                     <Button Content="Done" Background="#4CAF50" Foreground="White"/>
-                                    <Button Content="Delete" Background="#F44336" Foreground="White"/>
+                                    <Button Content="Delete" 
+                                            Background="#F44336" 
+                                            Foreground="White"
+                                            Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).DeleteHabitCommand}"
+                                            CommandParameter="{Binding Id}"/>
                                 </StackPanel>
                                 
                                 <StackPanel>
