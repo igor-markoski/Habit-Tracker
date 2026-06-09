@@ -45,8 +45,8 @@
                     Orientation="Vertical" 
                     Spacing="10" 
                     Margin="0,20,0,0">
-            <TextBox Watermark="Habit Name" Text="{Binding NewHabitName}"/>
-            <TextBox Watermark="Description" Text="{Binding NewHabitDescription}"/>
+            <TextBox PlaceholderText="Habit Name" Text="{Binding NewHabitName}"/>
+            <TextBox PlaceholderText="Description" Text="{Binding NewHabitDescription}"/>
             <Button Content="Add New Habit" 
                     Command="{Binding AddHabitCommand}"
                     HorizontalAlignment="Stretch"
