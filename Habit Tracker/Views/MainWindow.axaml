@@ -69,7 +69,12 @@
                                 
                                 <StackPanel>
                                     <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="18"/>
-                                    <TextBlock Text="{Binding Description}" FontSize="12" Foreground="Gray"/>
+                                    <TextBlock Text="{Binding Description}" FontSize="12" Foreground="Gray" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" Spacing="15">
+                                        <TextBlock Text="{Binding CurrentStreak, StringFormat='🔥 Current: {0}'}" FontSize="12" Foreground="OrangeRed" FontWeight="SemiBold"/>
+                                        <TextBlock Text="{Binding BestStreak, StringFormat='🏆 Best: {0}'}" FontSize="12" Foreground="Goldenrod" FontWeight="SemiBold"/>
+                                        <TextBlock Text="{Binding TotalCompleted, StringFormat='✅ Total: {0}'}" FontSize="12" Foreground="DodgerBlue" FontWeight="SemiBold"/>
+                                    </StackPanel>
                                 </StackPanel>
                             </DockPanel>
                         </Border>
