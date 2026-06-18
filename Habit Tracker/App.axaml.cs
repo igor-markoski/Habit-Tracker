@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 
+using Habit_Tracker.Commands;
 using Habit_Tracker.Services;
 using Habit_Tracker.Views;
 using Habit_Tracker.ViewModels;
@@ -39,6 +40,7 @@ namespace Habit_Tracker
             services.AddSingleton<IHabitRepository, JsonHabitRepository>();
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<HabitService>();
+            services.AddSingleton<UndoRedoManager>();
             services.AddSingleton<MainWindowViewModel>();
         }
     }
