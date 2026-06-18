@@ -53,5 +53,7 @@ namespace Habit_Tracker.Services
             string json = JsonSerializer.Serialize(habits, Options);
             File.WriteAllText(_filePath, json);
         }
+
+        public bool Exists() => File.Exists(_filePath);
     }
 }

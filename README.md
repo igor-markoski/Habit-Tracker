@@ -38,6 +38,7 @@ All data is stored locally as JSON — no account, no network.
 | Insights | At-risk streaks, strongest/weakest weekday, habit correlations |
 | Gamification | Five unlockable achievement badges + an XP level |
 | UX | Light/Dark theme toggle, Undo/Redo (buttons + `Ctrl+Z`/`Ctrl+Y`) |
+| Demo data | One-click **🎲 Sample** loads fresh example habits generated *relative to today* — always presentable |
 
 ## 3. Architecture & Design Patterns
 
@@ -134,6 +135,10 @@ filled columns per week.
 4. **Read the dashboard** — summary cards, insight banners, the 7-day chart, per-habit
    heatmaps and the achievements row all update automatically.
 5. **Theme** — toggle Light/Dark with the 🌓 button.
+6. **Demo data** — click **🎲 Sample** to (re)load example habits whose history is always
+   generated relative to today (ideal for a live demo). It's a single undoable action
+   (`Ctrl+Z` restores your previous habits). On a brand-new machine these defaults are also
+   seeded automatically on first launch.
 
 ## 7. How JSON Storage Works
 

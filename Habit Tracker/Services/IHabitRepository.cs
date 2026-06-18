@@ -12,5 +12,8 @@ namespace Habit_Tracker.Services
     {
         List<Habit> GetAll();
         void Save(IEnumerable<Habit> habits);
+
+        /// <summary>True if a data file already exists (so demo data is only seeded on a first run).</summary>
+        bool Exists();
     }
 }
