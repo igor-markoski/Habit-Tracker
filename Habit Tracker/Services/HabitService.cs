@@ -18,6 +18,13 @@ namespace Habit_Tracker.Services
         {
             _repository = repository;
             _habits = _repository.GetAll();
+
+            // First-ever run (no data file yet): start with friendly demo habits.
+            if (_habits.Count == 0 && !_repository.Exists())
+            {
+                _habits.AddRange(SampleData.Create());
+                Persist();
+            }
         }
 
         public IReadOnlyList<Habit> GetHabits() => _habits;
@@ -25,6 +32,17 @@ namespace Habit_Tracker.Services
         public Habit? GetById(Guid id) => _habits.FirstOrDefault(h => h.Id == id);
 
         public int IndexOf(Guid id) => _habits.FindIndex(h => h.Id == id);
+
+        /// <summary>A defensive copy of the current habits (used to support undo of bulk replace).</summary>
+        public List<Habit> Snapshot() => new List<Habit>(_habits);
+
+        /// <summary>Replaces the entire habit list (used by "load sample data").</summary>
+        public void ReplaceAll(IEnumerable<Habit> habits)
+        {
+            _habits.Clear();
+            _habits.AddRange(habits);
+            Persist();
+        }
 
         public Habit AddHabit(string name, string description)
         {

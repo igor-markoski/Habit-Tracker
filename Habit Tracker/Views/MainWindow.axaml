@@ -62,6 +62,12 @@
                             FontSize="16"
                             Padding="10,8"
                             CornerRadius="5"/>
+                    <Button Content="🎲 Sample"
+                            ToolTip.Tip="Load fresh demo habits (always relative to today)"
+                            Command="{Binding LoadSampleDataCommand}"
+                            Background="Transparent"
+                            Padding="10"
+                            CornerRadius="5"/>
                     <Button Content="+ Add Habit"
                             Command="{Binding AddHabitCommand}"
                             Background="#2196F3"
@@ -175,7 +181,7 @@
 
                 <!-- Habits list -->
                 <TextBlock Text="Your habits" FontWeight="Bold" FontSize="16"/>
-                <TextBlock Text="No habits yet — click “+ Add Habit” to create your first one."
+                <TextBlock Text="No habits yet — click “+ Add Habit”, or “🎲 Sample” to load demo data."
                            Foreground="Gray"
                            IsVisible="{Binding !HasHabits}"/>
 

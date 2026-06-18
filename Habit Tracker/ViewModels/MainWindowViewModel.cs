@@ -117,6 +117,13 @@ namespace Habit_Tracker.ViewModels
         }
 
         [RelayCommand]
+        private void LoadSampleData()
+        {
+            _history.Execute(new LoadSampleDataCommand(_habitService));
+            Refresh();
+        }
+
+        [RelayCommand]
         private void ToggleTheme()
         {
             if (Avalonia.Application.Current != null)
