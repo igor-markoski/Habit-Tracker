@@ -1,5 +1,7 @@
 # Habit Tracker — .NET 10 / Avalonia UI
 
+> Solo course project (FINKI, Skopje) · Author: **Igor Markoski** ([@igor-markoski](https://github.com/igor-markoski)) · Developed with a Git **feature-branch workflow** (see the merge history on `main`).
+
 A local-first desktop habit tracker that turns a plain completion log into streaks,
 a contribution heatmap, weekly charts, gamified achievements, and automatically
 generated insights about your behaviour.
@@ -159,9 +161,22 @@ review were done by the author. Tools used:
   visual dashboard (custom `HeatmapControl`, charts, achievements). Each feature was
   built on its own branch and verified with a real build + run.
 
-> **Note for submission:** the assignment requires the *exact prompts* to be documented.
-> Add the specific prompts you used here, e.g.: *"Give me ideas to make my Avalonia habit
-> tracker more complex"*, *"Add habit frequencies using the Strategy pattern"*, etc.
+### Representative prompts
+
+The advanced layer was driven by these prompts to Claude Code (Opus 4.8):
+
+1. *"I have this habit tracker made with AI … give me ideas to make my Windows app more
+   complex because I think it is pretty boring."*
+2. *"Build all four: visual dashboard; frequencies + Strategy pattern; DI + Repository +
+   Undo/Redo; smart insights engine."*
+3. *"Set up the README to have everything needed and commit everything to GitHub."*
+
+The base scaffold (Avalonia MVVM project, CRUD, streak calculation, JSON storage, theme
+toggle) was generated earlier with the **Gemini CLI**, and **ChatGPT** was used to draft
+the initial requirements.
+
+> *If you have the exact wording of your original ChatGPT/Gemini prompts, paste them above
+> to make this section fully precise — the assignment asks for the specific prompts used.*
 
 ## 9. Build & Run
 
