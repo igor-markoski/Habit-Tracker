@@ -2,40 +2,70 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="Habit_Tracker.Views.AddHabitWindow"
         Title="Add New Habit"
-        Width="400" Height="250"
+        Width="420" Height="540"
         CanResize="False"
         WindowStartupLocation="CenterOwner"
         ExtendClientAreaToDecorationsHint="True">
-    
-    <Border Padding="20" Background="{DynamicResource SystemRegionBrush}">
-        <Grid RowDefinitions="Auto, *, Auto">
-            
-            <TextBlock Grid.Row="0" 
-                       Text="Create a New Habit" 
-                       FontSize="22" 
-                       FontWeight="Bold" 
-                       Margin="0,0,0,20"/>
 
-            <StackPanel Grid.Row="1" Spacing="15">
-                <TextBox x:Name="NameTextBox" 
-                         PlaceholderText="Habit Name (e.g., Drink Water)" 
+    <Border Padding="24" Background="{DynamicResource SystemRegionBrush}">
+        <Grid RowDefinitions="Auto, *, Auto">
+
+            <TextBlock Grid.Row="0"
+                       Text="Create a New Habit"
+                       FontSize="22"
+                       FontWeight="Bold"
+                       Margin="0,0,0,16"/>
+
+            <StackPanel Grid.Row="1" Spacing="12">
+                <TextBox x:Name="NameTextBox"
+                         PlaceholderText="Habit name (e.g. Drink water)"
                          FontSize="14"/>
-                <TextBox x:Name="DescTextBox" 
-                         PlaceholderText="Description (Optional)" 
+                <TextBox x:Name="DescTextBox"
+                         PlaceholderText="Description (optional)"
                          FontSize="14"/>
+                <TextBox x:Name="CategoryTextBox"
+                         PlaceholderText="Category (e.g. Health)"
+                         Text="General"
+                         FontSize="14"/>
+
+                <TextBlock Text="Frequency" FontWeight="SemiBold" Margin="0,4,0,0"/>
+                <ComboBox x:Name="FrequencyCombo"
+                          HorizontalAlignment="Stretch"
+                          SelectedIndex="0">
+                    <ComboBoxItem>Every day</ComboBoxItem>
+                    <ComboBoxItem>Weekly target</ComboBoxItem>
+                    <ComboBoxItem>Specific days</ComboBoxItem>
+                </ComboBox>
+
+                <StackPanel x:Name="WeeklyPanel" Orientation="Horizontal" Spacing="10" IsVisible="False">
+                    <TextBlock Text="Times per week:" VerticalAlignment="Center"/>
+                    <NumericUpDown x:Name="TimesUpDown"
+                                   Minimum="1" Maximum="7" Increment="1" Value="3"
+                                   Width="120"/>
+                </StackPanel>
+
+                <WrapPanel x:Name="DaysPanel" IsVisible="False">
+                    <ToggleButton x:Name="DayMon" Content="Mon" Margin="0,0,6,6"/>
+                    <ToggleButton x:Name="DayTue" Content="Tue" Margin="0,0,6,6"/>
+                    <ToggleButton x:Name="DayWed" Content="Wed" Margin="0,0,6,6"/>
+                    <ToggleButton x:Name="DayThu" Content="Thu" Margin="0,0,6,6"/>
+                    <ToggleButton x:Name="DayFri" Content="Fri" Margin="0,0,6,6"/>
+                    <ToggleButton x:Name="DaySat" Content="Sat" Margin="0,0,6,6"/>
+                    <ToggleButton x:Name="DaySun" Content="Sun" Margin="0,0,6,6"/>
+                </WrapPanel>
             </StackPanel>
 
-            <StackPanel Grid.Row="2" 
-                        Orientation="Horizontal" 
-                        HorizontalAlignment="Right" 
+            <StackPanel Grid.Row="2"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right"
                         Spacing="10"
-                        Margin="0,20,0,0">
-                <Button Content="Cancel" 
-                        Click="CancelButton_Click" 
+                        Margin="0,16,0,0">
+                <Button Content="Cancel"
+                        Click="CancelButton_Click"
                         Padding="15,8"/>
-                <Button Content="Save Habit" 
-                        Click="SaveButton_Click" 
-                        Background="#2196F3" 
+                <Button Content="Save Habit"
+                        Click="SaveButton_Click"
+                        Background="#2196F3"
                         Foreground="White"
                         FontWeight="Bold"
                         Padding="15,8"/>

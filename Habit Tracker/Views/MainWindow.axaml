@@ -5,17 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:models="using:Habit_Tracker.Models"
         xmlns:conv="using:Habit_Tracker.Converters"
-        mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="600"
+        xmlns:ctrl="using:Habit_Tracker.Controls"
+        mc:Ignorable="d" d:DesignWidth="760" d:DesignHeight="700"
         x:Class="Habit_Tracker.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Title="Habit Tracker"
-        Width="700" Height="600"
+        Width="780" Height="720"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource SystemRegionBrush}">
 
     <Window.Resources>
-        <conv:BoolToDoneConverter x:Key="BoolToDoneConverter"/>
-        <conv:BoolToColorConverter x:Key="BoolToColorConverter"/>
+        <conv:StringToBrushConverter x:Key="StrToBrush"/>
     </Window.Resources>
 
     <Design.DataContext>
@@ -29,7 +29,7 @@
 
     <Grid RowDefinitions="Auto, *">
         <!-- Header -->
-        <Border Grid.Row="0" 
+        <Border Grid.Row="0"
                 Background="{DynamicResource SystemChromeLowColor}"
                 Padding="20"
                 BorderBrush="{DynamicResource SystemBaseLowColor}"
@@ -79,64 +79,224 @@
         </Border>
 
         <!-- Content -->
-        <ScrollViewer Grid.Row="1" Padding="20">
-            <ItemsControl ItemsSource="{Binding Habits}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="models:Habit">
-                        <Border Background="{DynamicResource SystemAltHighColor}"
-                                BorderBrush="{DynamicResource SystemBaseLowColor}" 
-                                BorderThickness="1" 
-                                CornerRadius="8" 
-                                Padding="20" 
-                                Margin="0,0,0,15">
-                            <Grid ColumnDefinitions="*, Auto">
-                                <!-- Info -->
-                                <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="20" Margin="0,0,0,5"/>
-                                    <TextBlock Text="{Binding Description}" FontSize="14" Foreground="Gray" Margin="0,0,0,15"/>
-                                    
-                                    <!-- Stats Grid -->
-                                    <StackPanel Orientation="Horizontal" Spacing="25">
-                                        <StackPanel Orientation="Horizontal" Spacing="5">
-                                            <TextBlock Text="🔥" FontSize="16"/>
-                                            <TextBlock Text="{Binding CurrentStreak, StringFormat='Streak: {0}'}" FontSize="14" Foreground="OrangeRed" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Spacing="5">
-                                            <TextBlock Text="🏆" FontSize="16"/>
-                                            <TextBlock Text="{Binding BestStreak, StringFormat='Best: {0}'}" FontSize="14" Foreground="Goldenrod" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Spacing="5">
-                                            <TextBlock Text="✅" FontSize="16"/>
-                                            <TextBlock Text="{Binding TotalCompleted, StringFormat='Total: {0}'}" FontSize="14" Foreground="DodgerBlue" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                                        </StackPanel>
+        <ScrollViewer Grid.Row="1">
+            <StackPanel Margin="20" Spacing="18">
+
+                <!-- Summary stat cards -->
+                <UniformGrid Columns="4">
+                    <Border Background="{DynamicResource SystemChromeLowColor}" CornerRadius="8" Padding="14" Margin="0,0,10,0">
+                        <StackPanel>
+                            <TextBlock Text="Active habits" FontSize="12" Foreground="Gray"/>
+                            <TextBlock Text="{Binding ActiveHabitsCount}" FontSize="24" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="{DynamicResource SystemChromeLowColor}" CornerRadius="8" Padding="14" Margin="0,0,10,0">
+                        <StackPanel>
+                            <TextBlock Text="Done today" FontSize="12" Foreground="Gray"/>
+                            <TextBlock Text="{Binding DoneTodayText}" FontSize="24" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="{DynamicResource SystemChromeLowColor}" CornerRadius="8" Padding="14" Margin="0,0,10,0">
+                        <StackPanel>
+                            <TextBlock Text="Longest streak" FontSize="12" Foreground="Gray"/>
+                            <TextBlock Text="{Binding LongestStreak}" FontSize="24" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="{DynamicResource SystemChromeLowColor}" CornerRadius="8" Padding="14">
+                        <StackPanel>
+                            <TextBlock Text="Total done" FontSize="12" Foreground="Gray"/>
+                            <TextBlock Text="{Binding TotalCompletions}" FontSize="24" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Border>
+                </UniformGrid>
+
+                <!-- Smart insights -->
+                <ItemsControl ItemsSource="{Binding Insights}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="models:Insight">
+                            <Border Background="{DynamicResource SystemAltHighColor}"
+                                    BorderBrush="{Binding AccentHex, Converter={StaticResource StrToBrush}}"
+                                    BorderThickness="1"
+                                    CornerRadius="8"
+                                    Padding="14,10"
+                                    Margin="0,0,0,8">
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <TextBlock Text="{Binding Icon}" FontSize="18" VerticalAlignment="Center"/>
+                                    <StackPanel VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Title}"
+                                                   FontWeight="Bold"
+                                                   Foreground="{Binding AccentHex, Converter={StaticResource StrToBrush}}"/>
+                                        <TextBlock Text="{Binding Message}" TextWrapping="Wrap" FontSize="13"/>
                                     </StackPanel>
                                 </StackPanel>
-                                
-                                <!-- Actions -->
-                                <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="10" VerticalAlignment="Center" Margin="20,0,0,0">
-                                    <Button Content="{Binding IsCompletedToday, Converter={StaticResource BoolToDoneConverter}}" 
-                                            Background="{Binding IsCompletedToday, Converter={StaticResource BoolToColorConverter}}" 
-                                            Foreground="White"
-                                            FontWeight="Bold"
-                                            HorizontalAlignment="Stretch"
-                                            HorizontalContentAlignment="Center"
-                                            Padding="20,10"
-                                            CornerRadius="5"
-                                            Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ToggleDoneCommand}"
-                                            CommandParameter="{Binding Id}"/>
-                                    <Button Content="Delete" 
-                                            Background="Transparent" 
-                                            Foreground="#F44336"
-                                            HorizontalAlignment="Stretch"
-                                            HorizontalContentAlignment="Center"
-                                            Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).DeleteHabitCommand}"
-                                            CommandParameter="{Binding Id}"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <!-- Weekly activity chart -->
+                <Border Background="{DynamicResource SystemAltHighColor}"
+                        BorderBrush="{DynamicResource SystemBaseLowColor}"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="18"
+                        IsVisible="{Binding HasHabits}">
+                    <StackPanel>
+                        <TextBlock Text="Last 7 days" FontWeight="Bold" FontSize="15" Margin="0,0,0,12"/>
+                        <ItemsControl ItemsSource="{Binding WeeklyBars}" HorizontalAlignment="Center">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" Spacing="6"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:DayBar">
+                                    <StackPanel Width="36">
+                                        <Grid Height="90">
+                                            <Border Width="22"
+                                                    Height="{Binding HeightPx}"
+                                                    Background="#2196F3"
+                                                    CornerRadius="4,4,0,0"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center"
+                                                    ToolTip.Tip="{Binding Count}"/>
+                                        </Grid>
+                                        <TextBlock Text="{Binding Label}"
+                                                   FontSize="11"
+                                                   Foreground="Gray"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="0,6,0,0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+                <!-- Habits list -->
+                <TextBlock Text="Your habits" FontWeight="Bold" FontSize="16"/>
+                <TextBlock Text="No habits yet — click “+ Add Habit” to create your first one."
+                           Foreground="Gray"
+                           IsVisible="{Binding !HasHabits}"/>
+
+                <ItemsControl ItemsSource="{Binding Habits}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="vm:HabitItemViewModel">
+                            <Border Background="{DynamicResource SystemAltHighColor}"
+                                    BorderBrush="{DynamicResource SystemBaseLowColor}"
+                                    BorderThickness="1"
+                                    CornerRadius="8"
+                                    Margin="0,0,0,14">
+                                <Grid ColumnDefinitions="6, *">
+                                    <!-- accent stripe -->
+                                    <Border Grid.Column="0"
+                                            Background="{Binding AccentBrush}"
+                                            CornerRadius="8,0,0,8"/>
+
+                                    <Grid Grid.Column="1" Margin="16" RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, Auto">
+                                        <!-- title + chips -->
+                                        <StackPanel Grid.Row="0" Grid.Column="0" Spacing="6">
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="18" VerticalAlignment="Center"/>
+                                                <Border Background="{Binding AccentBrush}" CornerRadius="10" Padding="9,2" VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding Category}" Foreground="White" FontSize="11"/>
+                                                </Border>
+                                                <Border Background="{DynamicResource SystemBaseLowColor}" CornerRadius="10" Padding="9,2" VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding FrequencyText}" Foreground="Gray" FontSize="11"/>
+                                                </Border>
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding Description}"
+                                                       FontSize="13"
+                                                       Foreground="Gray"
+                                                       IsVisible="{Binding HasDescription}"/>
+                                        </StackPanel>
+
+                                        <!-- actions -->
+                                        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Top">
+                                            <Button Content="{Binding ToggleLabel}"
+                                                    Background="{Binding ToggleBrush}"
+                                                    Foreground="White"
+                                                    FontWeight="Bold"
+                                                    CornerRadius="5"
+                                                    Padding="14,8"
+                                                    Command="{Binding ToggleCommand}"/>
+                                            <Button Content="🗑"
+                                                    Background="Transparent"
+                                                    Foreground="#F44336"
+                                                    CornerRadius="5"
+                                                    Command="{Binding DeleteCommand}"
+                                                    ToolTip.Tip="Delete habit"/>
+                                        </StackPanel>
+
+                                        <!-- stats -->
+                                        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                                    Orientation="Horizontal" Spacing="22" Margin="0,12,0,10">
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <TextBlock Text="🔥" FontSize="14"/>
+                                                <TextBlock Text="{Binding CurrentStreak, StringFormat='Streak: {0}'}" FontSize="13" Foreground="OrangeRed" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <TextBlock Text="🏆" FontSize="14"/>
+                                                <TextBlock Text="{Binding BestStreak, StringFormat='Best: {0}'}" FontSize="13" Foreground="Goldenrod" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <TextBlock Text="✅" FontSize="14"/>
+                                                <TextBlock Text="{Binding TotalCompleted, StringFormat='Total: {0}'}" FontSize="13" Foreground="DodgerBlue" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <TextBlock Text="📈" FontSize="14"/>
+                                                <TextBlock Text="{Binding CompletionRatePercent, StringFormat='30d: {0}%'}" FontSize="13" Foreground="MediumSeaGreen" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <!-- heatmap -->
+                                        <ctrl:HeatmapControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                                             Habit="{Binding Habit}"
+                                                             HorizontalAlignment="Left"/>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <!-- Achievements -->
+                <Border Background="{DynamicResource SystemAltHighColor}"
+                        BorderBrush="{DynamicResource SystemBaseLowColor}"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="18">
+                    <StackPanel>
+                        <Grid ColumnDefinitions="*, Auto" Margin="0,0,0,12">
+                            <TextBlock Grid.Column="0" Text="Achievements" FontWeight="Bold" FontSize="15"/>
+                            <Border Grid.Column="1" Background="#2196F3" CornerRadius="10" Padding="10,2">
+                                <TextBlock Text="{Binding Level, StringFormat='Level {0}'}" Foreground="White" FontSize="12" FontWeight="Bold"/>
+                            </Border>
+                        </Grid>
+                        <ItemsControl ItemsSource="{Binding Achievements}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="models:Achievement">
+                                    <Border Width="112" Margin="6" Padding="10" CornerRadius="8"
+                                            Background="{DynamicResource SystemChromeLowColor}"
+                                            Opacity="{Binding Opacity}"
+                                            ToolTip.Tip="{Binding Description}">
+                                        <StackPanel HorizontalAlignment="Center" Spacing="4">
+                                            <TextBlock Text="{Binding Icon}" FontSize="26" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="{Binding Title}" FontSize="12" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
         </ScrollViewer>
     </Grid>
 </Window>

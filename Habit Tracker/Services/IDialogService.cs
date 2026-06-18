@@ -4,6 +4,7 @@ namespace Habit_Tracker.Services
 {
     public interface IDialogService
     {
-        Task<(bool Success, string Name, string Description)> ShowAddHabitDialogAsync();
+        /// <summary>Shows the Add-Habit dialog; returns null if the user cancels.</summary>
+        Task<HabitEditorResult?> ShowAddHabitDialogAsync();
     }
 }
