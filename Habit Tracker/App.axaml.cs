@@ -40,6 +40,8 @@ namespace Habit_Tracker
             services.AddSingleton<IHabitRepository, JsonHabitRepository>();
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<HabitService>();
+            services.AddSingleton<HabitAnalyzer>();
+            services.AddSingleton<AchievementService>();
             services.AddSingleton<UndoRedoManager>();
             services.AddSingleton<MainWindowViewModel>();
         }
