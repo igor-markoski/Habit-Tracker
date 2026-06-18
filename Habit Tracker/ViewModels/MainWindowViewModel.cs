@@ -17,12 +17,17 @@ namespace Habit_Tracker.ViewModels
         [ObservableProperty]
         private ObservableCollection<Habit> _habits;
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(HabitService habitService, IDialogService dialogService)
         {
-            var storage = new StorageService();
-            _habitService = new HabitService(storage);
-            _dialogService = new DialogService(); // Injected for simplicity
+            _habitService = habitService;
+            _dialogService = dialogService;
             _habits = new ObservableCollection<Habit>(_habitService.GetHabits());
+        }
+
+        // Parameterless constructor used by the XAML designer (design-time data only).
+        public MainWindowViewModel()
+            : this(new HabitService(new JsonHabitRepository()), new DialogService())
+        {
         }
 
         [RelayCommand]
