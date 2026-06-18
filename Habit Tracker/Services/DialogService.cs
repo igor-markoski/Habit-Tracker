@@ -5,17 +5,16 @@ namespace Habit_Tracker.Services
 {
     public class DialogService : IDialogService
     {
-        public async Task<(bool Success, string Name, string Description)> ShowAddHabitDialogAsync()
+        public async Task<HabitEditorResult?> ShowAddHabitDialogAsync()
         {
             var dialog = new Views.AddHabitWindow();
-            var mainWindow = (Avalonia.Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
-            
+            var mainWindow = (Avalonia.Application.Current?.ApplicationLifetime
+                as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
+
             if (mainWindow != null)
-            {
-                var result = await dialog.ShowDialog<(bool, string, string)>(mainWindow);
-                return result;
-            }
-            return (false, "", "");
+                return await dialog.ShowDialog<HabitEditorResult?>(mainWindow);
+
+            return null;
         }
     }
 }
